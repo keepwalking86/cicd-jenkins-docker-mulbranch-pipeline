@@ -1,0 +1,160 @@
+Branch indexing
+ > git rev-parse --is-inside-work-tree # timeout=10
+Setting origin to http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git
+ > git config remote.origin.url http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git --version # timeout=10
+ > git config --get remote.origin.url # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress origin +refs/heads/*:refs/remotes/origin/*
+Seen branch in repository origin/master
+Seen 1 remote branch
+Obtained Jenkinsfile from b31be0ad97ad64d48e86453dfdb59b3cdc53a219
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/anch_pipeline_docker_master-3PGTTPHVIXASJIVUWVB5FROPHFCD65VEDUYIS64VJQQFDPF4F22Q
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+Cloning the remote Git repository
+Cloning with configured refspecs honoured and without tags
+Cloning repository http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git
+ > git init /var/lib/jenkins/workspace/anch_pipeline_docker_master-3PGTTPHVIXASJIVUWVB5FROPHFCD65VEDUYIS64VJQQFDPF4F22Q # timeout=10
+Fetching upstream changes from http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --no-tags --progress http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git # timeout=10
+Fetching without tags
+Fetching upstream changes from http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git
+using GIT_ASKPASS to set credentials 
+ > git fetch --no-tags --progress http://gitlab.example.local/dungnv/multibranch_pipeline_docker.git +refs/heads/*:refs/remotes/origin/*
+Checking out Revision b31be0ad97ad64d48e86453dfdb59b3cdc53a219 (master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b31be0ad97ad64d48e86453dfdb59b3cdc53a219
+Commit message: "Add repo"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (composer_update)
+[Pipeline] sh
+[anch_pipeline_docker_master-3PGTTPHVIXASJIVUWVB5FROPHFCD65VEDUYIS64VJQQFDPF4F22Q] Running shell script
++ cd src
++ composer update
+Loading composer repositories with package information
+Updating dependencies (including require-dev)
+Package operations: 79 installs, 0 updates, 0 removals
+As there is no 'unzip' command installed zip files are being unpacked using the PHP zip extension.
+.....
+.....
+.....
+sent 624.84K bytes  received 615.29K bytes  190.79K bytes/sec
+total size is 48.57M  speedup is 39.16
+[Pipeline] sh
+[anch_pipeline_docker_master-3PGTTPHVIXASJIVUWVB5FROPHFCD65VEDUYIS64VJQQFDPF4F22Q] Running shell script
++ ssh root@192.168.1.111 cd /root/docker/ && bash dockerBuild.sh
+Sending build context to Docker daemon  56.42MB
+
+Step 1/10 : FROM nginx:latest
+ ---> e81eb098537d
+Step 2/10 : MAINTAINER KeepWalking86
+ ---> Using cache
+ ---> d15fb371f970
+Step 3/10 : ADD ./default.conf /etc/nginx/conf.d/
+ ---> 8b992efece08
+Step 4/10 : RUN mkdir -p /var/www/example/
+ ---> Running in ba2111c69c62
+Removing intermediate container ba2111c69c62
+ ---> 80e4fd95f696
+Step 5/10 : RUN chown -R nginx:nginx /var/www/example
+ ---> Running in dcf11dc9e707
+Removing intermediate container dcf11dc9e707
+ ---> 9b807769d7dd
+Step 6/10 : RUN apt-get update
+ ---> Running in 2ae46db3011f
+Ign:2 http://cdn-fastly.deb.debian.org/debian stretch InRelease
+Get:1 http://security-cdn.debian.org/debian-security stretch/updates InRelease [94.3 kB]
+Get:3 http://cdn-fastly.deb.debian.org/debian stretch-updates InRelease [91.0 kB]
+Get:4 http://cdn-fastly.deb.debian.org/debian stretch Release [118 kB]
+Get:5 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 Packages [460 kB]
+Get:6 http://cdn-fastly.deb.debian.org/debian stretch-updates/main amd64 Packages [5152 B]
+Get:7 http://cdn-fastly.deb.debian.org/debian stretch Release.gpg [2434 B]
+Get:8 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 Packages [7089 kB]
+Fetched 7860 kB in 39s (200 kB/s)
+Reading package lists...
+Removing intermediate container 2ae46db3011f
+ ---> f6659a6db9a5
+Step 7/10 : RUN apt-get install net-tools lsof -y
+ ---> Running in 344e19046b07
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Suggested packages:
+  perl
+The following NEW packages will be installed:
+  lsof net-tools
+0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Need to get 561 kB of archives.
+After this operation, 1413 kB of additional disk space will be used.
+Get:1 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 lsof amd64 4.89+dfsg-0.1 [313 kB]
+Get:2 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 net-tools amd64 1.60+git20161116.90da8a0-1 [248 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 561 kB in 1s (504 kB/s)
+Selecting previously unselected package lsof.
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 7026 files and directories currently installed.)
+Preparing to unpack .../lsof_4.89+dfsg-0.1_amd64.deb ...
+Unpacking lsof (4.89+dfsg-0.1) ...
+Selecting previously unselected package net-tools.
+Preparing to unpack .../net-tools_1.60+git20161116.90da8a0-1_amd64.deb ...
+Unpacking net-tools (1.60+git20161116.90da8a0-1) ...
+Setting up lsof (4.89+dfsg-0.1) ...
+Setting up net-tools (1.60+git20161116.90da8a0-1) ...
+Removing intermediate container 344e19046b07
+ ---> 133b393d19a5
+Step 8/10 : RUN usermod -u 1000 nginx && groupmod -g 1000 nginx
+ ---> Running in 64557de91ce1
+Removing intermediate container 64557de91ce1
+ ---> bac0b7722aa3
+Step 9/10 : RUN apt-get clean
+ ---> Running in 6762c3f34f3a
+Removing intermediate container 6762c3f34f3a
+ ---> ea96c5e07aa3
+Step 10/10 : EXPOSE 80
+ ---> Running in 18979039de75
+Removing intermediate container 18979039de75
+ ---> 22afd983c88c
+Successfully built 22afd983c88c
+Successfully tagged keepwalking/nginx_laravel:latest
+49070ae0d68768b4e3794428bd13c855179268edb5fceff19d298bfcefb36aae
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
